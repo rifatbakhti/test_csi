@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  	<title>
+  		Форма заявки на регистрацию товарного знака &copy;
+  	</title>
+    <style>
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+input[type="submit"]
+{
+ border: 1;
+ background: none;
+ box-shadow: none;
+ border-radius: 1px;
+}
+
+input[type="submit"]:hover
+{
+ border: 1;
+ background: red;
+ box-shadow: none;
+ border-radius: 1px;
+}
+
+
+  </style>
+  </head>
+  <body>
+  <h3>Адрес для переписки с роспатентом</h3>
+  <form action="/submit" method="get">
+  <table class="styled-table">
+  <tr>
+    <th width=300px>Поле</th>
+    <th>Значение</th>
+    <th>Комментарий</th>
+  </tr>
+  <tr>
+    <td>Фамилия</td>
+    <td><input type="text" name="last_name" /></td>
+    <td>коммент</td>
+  </tr>
+  <tr>
+    <td>Имя</td>
+    <td><input type="text" name="first_name" /></td>
+    <td>коммент</td>
+  </tr>
+  <tr>
+    <td>Отчество (при наличии)</td>
+    <td><input type="text" name="patronic_name" /></td>
+    <td>коммент</td>
+  </tr>
+  <tr>
+    <td>Наименование организации</td>
+    <td><input type="text" name="org_name" /></td>
+    <td>коммент</td>
+  </tr>
+  <tr>
+    <td>Адрес для корреспонденции</td>
+    <td><input type="text" name="address" /></td>
+    <td>КЛАДР</td>
+  </tr>
+  <tr>
+    <td>Телефон</td>
+    <td><input type="text" name="phone" placeholder="+74951234567" maxlength=12 /></td>
+    <td>коммент</td>
+  </tr>
+  <tr>
+    <td>Адрес электронной почты</td>
+    <td><input type="text" name="email" /></td>
+    <td>коммент</td>
+  </tr>
+  </table>
+  <br />
+    <h3>Заявители - физические лица</h3>
+    <div id="indiv_appl_subform">
+    </div>
+    <h3>Заявители - организации</h3>
+    <div id="inst_appl_subform">
+    </div>
+    <br />
+    <br />
+    <input class="btn btn-round btn-sm btn-ghost-grey" type="submit" value="Отправить" />
+    </form>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel" src="js/form.js"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+https://service.nalog.ru/inn.html
+
+function submitAjax(form,doBlockUI,url) {
+  var $form=!form?$('#frm'):$(form);
+  if(doBlockUI) {
+    var blockElement;
+    if ($form.hasClass('modal-form')) 
+      blockElement=$form[0];
+    blockUI(function(){submitAjax($form[0],false,url);},blockElement);
+  }
+  else {
+    if (!url) 
+      url=$form.attr('action');
+    if (isMultipartFromData($form)) {
+      var formData=getFormData($form);
+      formData.append('t',new Date().getTime());
+      $.ajax({
+        url:url,
+        data:formData,
+        type:'POST',
+        contentType:false,
+        processData:false,
+        success:function(result) {processSuccess(result,$form);},
+        dataType:'json'
+        }
+      );
+    }
+    else {
+      $.ajax({
+        type:$form.attr('method'),
+        url:url,
+        data:$form.serialize(),
+        success:function(result) {
+          processSuccess(result,$form);
+        },
+        dataType:'json'
+        }
+      );
+    }
+  }
+}
+
+function submitForm(form){var $form=!form?$('#frm'):$(form);$form.submit();}
+
+
+function() {
+  var form = this;
+  var $form = $(form);
+  var form_onsubmit = getEventHandler($form, 'onsubmit');
+  if (!form_onsubmit || form_onsubmit(form)) {
+    if ($form.hasClass('noajax')) {
+      return true;
+    }
+    var target = $form.attr('target');
+    if (target && target != 'iframe') {
+      return true;
+    }
+    hideErrors();
+    $('#pnl_result').hide();
+    if (isMultipartFromData($form) && !getFormData($form)) {
+      var $inpHtmlTag = $form.find('input[name="html"]');
+      if (!$inpHtmlTag.length) {
+        $inpHtmlTag = $('<input type="hidden" name="html"/>');
+        $form.append($inpHtmlTag);
+      }
+      $inpHtmlTag.val('1');
+      var iframeId = 'iframe';
+      $form.attr('target', iframeId);
+      var $iframe = $('iframe#' + iframeId);
+      if (!$iframe.length) {
+        $iframe = $('<iframe id="' + iframeId + '" name="' + iframeId + '" src="about:blank"/>');
+        $('body').append($iframe);
+        $iframe.load(iframe_onload);
+      }
+      $iframe.attr('data-form-id', $form.attr('id'));
+      blockUI(null, form);
+      return true;
+    } else {
+      submitAjax(form, true);
+      return false;
+    }
+  }
+  return false;
+}
