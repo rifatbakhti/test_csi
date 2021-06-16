@@ -1,0 +1,273 @@
+<html>
+<head>
+<title>E-FORM</title>
+<style>
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+</style>
+</head>
+    <script type='text/javascript'>
+        var number_applicants = 0;
+        var form_contents_applicants = [""];
+
+        var number_organizations = 0;
+        var form_contents_organizations = [""];
+
+        function add_applicant() {
+            number_applicants = number_applicants + 1;
+            var container = document.getElementById("container");
+            form_contents_applicants.push("<br />Заявитель " + number_applicants + "\n<table  class=\"styled-table\">\
+<tr>\
+    <th width=300px>Поле</th>\
+    <th>Значение</th>\
+    <th>Комментарий</th>\
+</tr>\
+<tr>\
+    <td>Фамилия</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_last_name\" /></td>\
+    <td>коммент</td>\
+</tr>\
+<tr>\
+    <td>Имя</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_first_name\" /></td>\
+    <td>коммент</td>\
+</tr>\
+<tr>\
+    <td>Отчество (при наличии)</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_patronic_name\" /></td>\
+    <td>коммент</td>\
+</tr>\
+<tr>\
+    <td>Адрес для корреспонденции</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_address\" /></td>\
+    <td>КЛАДР</td>\
+</tr>\
+<tr>\
+    <td>Страна</td>\
+    <td><select width=200px id=\"z" + number_applicants + "_country\">\
+        <option value=\"RU\">Россия</option>\
+        <option value=\"UK\">Украина</option>\
+        <option value=\"TR\">Турция</option>\
+        <option value=\"BL\">Беларусь</option>\
+        </select>\
+    </td>\
+    <td>КЛАДР</td>\
+</tr>\
+<tr>\
+    <td>ИНН</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "inn\" /></td>\
+    <td>прикрутить формат (10 символов) XXXXXXXXXX  ? проверить 10 или 12 узнать на nalog.ru</td>\
+</tr>\
+<tr>\
+    <td>СНИЛС</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "snils\" /></td>\
+    <td>прикрутить формат (10 символов) XXX-XXX-XX XX</td>\
+</tr>\
+<tr>\
+    <td>Паспорт</td>\
+    <td><select width=200px id=\"z" + number_applicants + "_id\">\
+        <option value=\"RU\">Паспорт РФ</option>\
+        <option value=\"FOREIGN\">Паспорт иностранного гражданина</option>\
+        </select>\
+    </td>\
+    <td>варианты</td>\
+</tr>\
+<tr>\
+    <td>Серия</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_pass_seria\" /></td>\
+    <td>XX XX</td>\
+</tr>\
+<tr>\
+    <td>Номер</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_pass_number\" /></td>\
+    <td>XXX XXX</td>\
+</tr>\
+<tr>\
+    <td>Должность</td>\
+    <td><input type=\"text\" name=\"z" + number_applicants + "_pass_dolzhnost\" /></td>\
+    <td>?</td>\
+</tr>\
+</table>");
+            container.innerHTML = form_contents_applicants.join("\n");
+        }
+
+        function pop_applicant() {
+            if (number_applicants > 0) {
+                number_applicants = number_applicants - 1;
+                var container = document.getElementById("container");
+                form_contents_applicants.pop();
+                container.innerHTML = form_contents_applicants.join("\n");
+            }
+        }
+
+
+        function add_organization() {
+            number_organizations = number_organizations + 1;
+            var container = document.getElementById("container_organizations");
+            form_contents_organizations.push("<br />Заявитель " + number_organizations + "\n<table class=\"styled-table\">\
+<tr>\
+    <th width=300px>Поле</th>\
+    <th>Значение</th>\
+    <th>Комментарий</th>\
+</tr>\
+<tr>\
+    <td>Наименование юридического лица</td>\
+    <td><input type=\"text\" name=\"j" + number_organizations + "_org_name\" /></td>\
+    <td>коммент</td>\
+</tr>\
+<tr>\
+    <td>Адрес для корреспонденции</td>\
+    <td><input type=\"text\" name=\"j" + number_organizations + "_address\" /></td>\
+    <td>КЛАДР</td>\
+</tr>\
+<tr>\
+    <td>ОГРН</td>\
+    <td><input type=\"text\" name=\"j" + number_organizations + "_ogrn\" /></td>\
+    <td>прикрутить формат (15 символов) XXXXX XXXXX XXXXX</td>\
+</tr>\
+<tr>\
+    <td>КПП</td>\
+    <td><input type=\"text\" name=\"j" + number_organizations + "_kpp\" /></td>\
+    <td>прикрутить формат (10 символов) XXXXXXXXXX</td>\
+</tr>\
+<tr>\
+    <td>ИНН</td>\
+    <td><input type=\"text\" name=\"j" + number_organizations + "_inn\" /></td>\
+    <td>прикрутить формат (10 символов) XXXXXXXXXX ? проверить 10 или 12 <a href=\"https://pb.nalog.ru/search.html#quick-result?queryAll=6319252148&mode=search-all&page=1&pageSize=10\">проверить</a>\
+        + попытаться подтянуть остальные идентификаторы по ИНН\
+    </td>\
+</tr>\
+</table>");
+            container.innerHTML = form_contents_organizations.join("\n");
+        }
+
+        function pop_organization() {
+            if (number_organizations > 0) {
+                number_organizations = number_organizations - 1;
+                var container = document.getElementById("container_organizations");
+                form_contents_organizations.pop();
+                container.innerHTML = form_contents_organizations.join("\n");
+            }
+        }
+    </script>
+<body>
+
+Адрес для переписки с роспатентом
+<form action="/submit" method="get">
+<table class="styled-table">
+<tr>
+    <th width=300px>Поле</th>
+    <th>Значение</th>
+    <th>Комментарий</th>
+</tr>
+<tr>
+    <td>Фамилия</td>
+    <td><input type="text" name="last_name" /></td>
+    <td>коммент</td>
+</tr>
+<tr>
+    <td>Имя</td>
+    <td><input type="text" name="first_name" /></td>
+    <td>коммент</td>
+</tr>
+<tr>
+    <td>Отчество (при наличии)</td>
+    <td><input type="text" name="patronic_name" /></td>
+    <td>коммент</td>
+</tr>
+<tr>
+    <td>Наименование организации</td>
+    <td><input type="text" name="org_name" /></td>
+    <td>коммент</td>
+</tr>
+<tr>
+    <td>Адрес для корреспонденции</td>
+    <td><input type="text" name="address" /></td>
+    <td>КЛАДР</td>
+</tr>
+<tr>
+    <td>Телефон</td>
+    <td><input type="text" name="phone" placeholder="+74951234567" maxlength=12 /></td>
+    <td>коммент</td>
+</tr>
+<tr>
+    <td>Адрес электронной почты</td>
+    <td><input type="text" name="email" /></td>
+    <td>коммент</td>
+</tr>
+</table>
+<br/>
+<br/>
+
+Заявитель - физ лицо
+
+<button type="button" onclick="add_applicant()">
+    +
+</button>
+
+<button type="button" onclick="pop_applicant()">
+    -
+</button>
+
+<div id="container">
+</div>
+
+
+<br/>
+<br/>
+Заявитель - юр лицо
+<button type="button" onclick="add_organization()">
+    +
+</button>
+
+<button type="button" onclick="pop_organization()">
+    -
+</button>
+
+<div id="container_organizations">
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<input type="submit" />
+</form>
+Нормально схему сделать для базы данных.
+</body>
+</html>
