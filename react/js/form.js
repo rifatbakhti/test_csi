@@ -494,11 +494,88 @@ class Representative extends React.Component {
 };
 
 
+class ProiritySubform extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        valsCache: {
+          "tm_priority": "disabled",
+          "checkbox1": "false",
+          "checkbox2": "false",
+          "checkbox3": "false",
+          "checkbox4": "false",
+          "checkbox5": "false",
+          "checkbox6": "false",
+        }
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    if (event.target.type == "checkbox") {
+      this.state.valsCache[event.target.name] = event.target.checked;
+    }
+    else {
+      this.state.valsCache[event.target.name] = event.target.value;
+    }
+    console.log(this.state.valsCache);
+    this.setState({valsCache: this.state.valsCache});
+  }
+
+  render() {
+    var selector = (
+      <table>
+        <tbody>
+          <tr>
+            <td>Приоритет товарного знака</td>
+            <td>
+            <select width="200px" name="tm_priority" value={this.state.valsCache["tm_priority"]} onChange={this.handleChange}>
+              <option value="disabled">не устанавливать</option>
+              <option value="enabled">установить</option>
+            </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
+    var result = [selector];
+    if (this.state.valsCache["tm_priority"] == "enabled") {
+      result.push(
+      <table className="styled-table">
+        <tbody>
+          <tr><td colSpan="2"><label><input type="checkbox" name="checkbox1" value={this.state.valsCache["checkbox1"]} onChange={this.handleChange} />по дате подачи первой(ых) заявки(ок) в государстве - участнике Парижской конвенции по охране промышленной собственности (п. 1 ст. 1495 Кодекса)</label></td></tr>
+          <tr><td colSpan="2"><label><input type="checkbox" name="checkbox2" value={this.state.valsCache["checkbox2"]} onChange={this.handleChange} />по дате начала открытого показа экспоната на выставке (пункт 2 статьи 1495 Кодекса)</label></td></tr>
+          <tr><td colSpan="2"><label><input type="checkbox" name="checkbox3" value={this.state.valsCache["checkbox3"]} onChange={this.handleChange} />по дате приоритета первоначальной заявки, из которой данная заявка выделена (пункт 2 статьи 1494 Кодекса)</label></td></tr>
+          <tr><td colSpan="2"><label><input type="checkbox" name="checkbox4" value={this.state.valsCache["checkbox4"]} onChange={this.handleChange} />по дате международной регистрации (п. 4 ст. 1495 Кодекса)</label></td></tr>
+          <tr><td colSpan="2"><label><input type="checkbox" name="checkbox5" value={this.state.valsCache["checkbox5"]} onChange={this.handleChange} />по дате внесения записи о территориальном расширении по международной регистрации (п. 4 ст. 1495 Кодекса)</label></td></tr>
+          <tr><td colSpan="2"><label><input type="checkbox" name="checkbox6" value={this.state.valsCache["checkbox6"]} onChange={this.handleChange} />по дате приоритета международной регистрации (п. 4 ст. 1495 Кодекса)</label></td></tr>
+          <tr><td colSpan="2">проверить валидность сочетаний галок</td></tr>
+          <tr><td colSpan="2"></td></tr>
+          <tr><td colSpan="2">ПРОШУ УСТАНОВИТЬ ДАТУ ПОДАЧИ НАСТОЯЩЕЙ ЗАЯВКИ по дате подачи первоначальной заявки, из которой данная заявка выделена (ст. 1491, п. 2 ст. 1502 Кодекса);</td></tr>
+          <tr><td>№ первой заявки</td><td><input type="text" name="first_app_num" value={this.state.valsCache["first_app_num"]} onChange={this.handleChange} /></td></tr>
+          <tr><td>Дата испрашиваемого приоритета</td><td><input type="date" name="first_app_date" value={this.state.valsCache["first_app_date "]} onChange={this.handleChange} /></td></tr>
+          <tr><td>Код страны подачи по стандарту ВОИС ST. 3 (при испрашивании конвенционного приоритета)</td><td><input type="text" name="first_app_country" value={this.state.valsCache["first_app_country"]} onChange={this.handleChange} /></td></tr>
+          <tr><td>№ первоначальной заявки</td><td><input type="text" name="init_app_num" value={this.state.valsCache["init_app_num"]} onChange={this.handleChange} /></td></tr>
+          <tr><td>Дата испрашиваемого приоритета</td><td><input type="date" name="init_app_date" value={this.state.valsCache["init_app_date "]} onChange={this.handleChange} /></td></tr>
+          <tr><td>Код страны подачи по стандарту ВОИС ST. 3 (при испрашивании конвенционного приоритета)</td><td><input type="text" name="init_app_country" value={this.state.valsCache["init_app_country"]} onChange={this.handleChange} /></td></tr>
+          <tr><td>№ международной регистрации</td><td><input type="text" name="int_app_date_app_num" value={this.state.valsCache["int_app_num"]} onChange={this.handleChange} /></td></tr>
+          <tr><td>Дата испрашиваемого приоритета</td><td><input type="date" name="int_app_date" value={this.state.valsCache["int_app_date "]} onChange={this.handleChange} /></td></tr>
+          <tr><td>Код страны подачи по стандарту ВОИС ST. 3 (при испрашивании конвенционного приоритета) тут везде конвенционный?</td><td><input type="text" name="int_app_country" value={this.state.valsCache["int_app_country"]} onChange={this.handleChange} /></td></tr>
+        </tbody>
+      </table>
+      );
+    }
+    return result;
+  }
+};
+
+
 const subformContainers = new Map(
   [
-	[InstApplSubform, document.querySelector("#inst_appl_subform")],
+	  [InstApplSubform, document.querySelector("#inst_appl_subform")],
     [IndivApplSubform, document.querySelector("#indiv_appl_subform")],
     [Representative, document.querySelector("#representative")],
+    [ProiritySubform, document.querySelector("#priority_subform")]
   ]
 );
 

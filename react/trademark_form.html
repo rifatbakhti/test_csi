@@ -1,66 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="css/table_styles.css">
     <meta charset="UTF-8" />
   	<title>
   		Форма заявки на регистрацию товарного знака &copy;
   	</title>
-    <style>
-.styled-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-}
-
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
-}
-
-input[type="submit"]
-{
- border: 1;
- background: none;
- box-shadow: none;
- border-radius: 1px;
-}
-
-input[type="submit"]:hover
-{
- border: 1;
- background: red;
- box-shadow: none;
- border-radius: 1px;
-}
-
-
-  </style>
   </head>
   <body>
   <h3>Адрес для переписки с роспатентом</h3>
@@ -216,12 +161,41 @@ input[type="submit"]:hover
   </tr>
   </table>
 
+  <h3>Классы МКТУ</h3>
+  <table class="styled-table">
+  <tr>
+    <th width=300px>Поле</th>
+    <th>Значение</th>
+    <th>Комментарий</th>
+  </tr>
+  <tr>
+    <td>Идентификаторы классов</td>
+    <td>
+       <select name="tm_type" height="15" multiple>
+        <option value="01">01 - световой знак</option>
+        <option value="02">02 - изменяющийся знак</option>
+        <option value="03">03 - позиционный знак</option>
+        <option value="04">04 - осязательный знак</option>
+        <option value="05">вкусовой знак</option>
+        <option value="06">голографический знак</option>
+        <option value="07">звуковой знак</option>
+        <option value="08">обонятельный знак</option>
+        <option value="09">знак, состоящий исключительно из одного или нескольких цветов</option>
+      </select>
+    </td>
+    <td>прикрутить расшифровки кодов при наведении мыши (наверное, лучше через js прикрутить)</td>
+  </tr>
+  </table>
+  
+  <h3>Приоритет</h3>
+  <div id="priority_subform">
+  </div>
 
-    <input type="submit" value="Отправить" />
-    </form>
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script type="text/babel" src="./js/form.js"></script>
+  <input type="submit" value="Отправить" />
+  </form>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/babel" src="./js/form.js"></script>
   </body>
 </html>
