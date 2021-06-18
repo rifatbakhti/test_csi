@@ -8,51 +8,11 @@
   	</title>
   </head>
   <body>
-  <h3>Адрес для переписки с роспатентом</h3>
   <form action="/submit" method="get">
-  <table class="styled-table">
-  <tr>
-    <th width=300px>Поле</th>
-    <th>Значение</th>
-    <th>Комментарий</th>
-  </tr>
-  <tr>
-    <td>Фамилия</td>
-    <td><input type="text" name="last_name" /></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Имя</td>
-    <td><input type="text" name="first_name" /></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Отчество (при наличии)</td>
-    <td><input type="text" name="patronic_name" /></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Наименование организации</td>
-    <td><input type="text" name="org_name" /></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Адрес для корреспонденции</td>
-    <td><input type="text" name="address" /></td>
-    <td>КЛАДР</td>
-  </tr>
-  <tr>
-    <td>Телефон</td>
-    <td><input type="text" name="phone" placeholder="+74951234567" maxlength=12 /></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Адрес электронной почты</td>
-    <td><input type="text" name="email" /></td>
-    <td>коммент</td>
-  </tr>
-  </table>
-  <br />
+    <div id="contact_data_subform">
+    </div>
+
+    <br />
     <h3>Заявители - физические лица</h3>
     <div id="indiv_appl_subform">
     </div>
@@ -69,128 +29,26 @@
     <br />
 
     
-    <h3>Заявляемое обозначение</h3>
-  <table class="styled-table">
-  <tr>
-    <th width=300px>Поле</th>
-    <th>Значение</th>
-    <th>Комментарий</th>
-  </tr>
-  <tr>
-    <td>Файл обозначения</td>
-    <td><input type="file" name="tm_file" /></td>
-    <td>ограничить или процессить, чтобы был размер (gif, jpeg, png), mb restriction? size?</td>
-  </tr>
-  <tr>
-    <td>Описание</td>
-    <td><textarea rows=2 name="tm_desc"> </textarea></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Цвет</td>
-    <td>
-        <select name="tm_color">
-          <option value="GRAYSCALE">Чёрно-белое (оттенки серого)</option>
-          <option value="COLOR">Цвертное</option>
-        </select>
-    </td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Перечислите цвета (для цветных изображений)</td>
-    <td><input type="text" name="colors_list" /></td>
-    <td>dynamic?</td>
-  </tr>
-  <tr>
-    <td>Указание, относящееся к виду знака:</td>
-    <td> 
-      <table class="">
-        <tbody>
-          <tr><td>
-            <label><input type="checkbox" name="sign_verbal" />словесный знак</label></td>
-          </tr></td>
-          <tr><td>
-            <label><input type="checkbox" name="sign_pic" />изобразительный знак</label></td>
-          </tr></td>
-          <tr><td>
-            <label><input type="checkbox" name="sign_vol"/>объёмный знак</label></td>
-          </tr></td>
-          <tr><td>
-            <label><input type="checkbox" name="sign_mix" />комбинированный знак</label></td>
-          </tr></td>
-          <tr><td>
-            <label><input type="checkbox" name="sign_other" />другое</label></td>
-          </tr></td>
-        </tbody>
-      </table>
-    </td>
-    <td>comment - сделать тут по левому краю</td>
-  </tr>
-  <tr>
-    <td>Тип знака</td>
-    <td>
-        <select name="tm_type">
-          <option value="LIGHT">световой знак</option>
-          <option value="MUTABLE">изменяющийся знак</option>
-          <option value="POSITIONAL">позиционный знак</option>
-          <option value="TOUCH">осязательный знак</option>
-          <option value="TASTE">вкусовой знак</option>
-          <option value="HOLOGRAPHIC">голографический знак</option>
-          <option value="SOUND">звуковой знак</option>
-          <option value="SMELL">обонятельный знак</option>
-          <option value="COLORS_ONLY">знак, состоящий исключительно из одного или нескольких цветов</option>
-        </select>
-    </td>
-    <td>коммент</td>
-  </tr>
-    <tr>
-    <td>Пояснение</td>
-    <td><textarea rows=2 cols=60 placeholder="характеристики знака, не являющегося словесным, изобразительным или их комбинацией" name="tm_desc"></textarea></td>
-    <td>коммент</td>
-  </tr>
-  <tr>
-    <td>Коллективный знак</td>
-    <td><input type="checkbox" name="tm_public" /></td>
-    <td>вкрячить пояснение</td>
-  </tr>
-  </tr>
-    <tr>
-    <td>Охраняемые элементы</td>
-    <td><textarea rows=2 cols=60 name="tm_elements"></textarea></td>
-    <td>коммент</td>
-  </tr>
-  </table>
+    <div id="trademark_info_subform">
+    </div>
+    <br />
+    <br />
 
-  <h3>Классы МКТУ</h3>
-  <table class="styled-table">
-  <tr>
-    <th width=300px>Поле</th>
-    <th>Значение</th>
-    <th>Комментарий</th>
-  </tr>
-  <tr>
-    <td>Идентификаторы классов</td>
-    <td>
-       <select name="tm_type" height="15" multiple>
-        <option value="01">01 - световой знак</option>
-        <option value="02">02 - изменяющийся знак</option>
-        <option value="03">03 - позиционный знак</option>
-        <option value="04">04 - осязательный знак</option>
-        <option value="05">вкусовой знак</option>
-        <option value="06">голографический знак</option>
-        <option value="07">звуковой знак</option>
-        <option value="08">обонятельный знак</option>
-        <option value="09">знак, состоящий исключительно из одного или нескольких цветов</option>
-      </select>
-    </td>
-    <td>прикрутить расшифровки кодов при наведении мыши (наверное, лучше через js прикрутить)</td>
-  </tr>
-  </table>
-  
+    <div id="mktu_subform">
+    </div>
+    <br />
+    <br />
+
+  <br />
+  <br />
   <h3>Приоритет</h3>
   <div id="priority_subform">
   </div>
 
+  <br />
+  <br />
+  <h3>Пошлина</h3>
+  
   <input type="submit" value="Отправить" />
   </form>
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>

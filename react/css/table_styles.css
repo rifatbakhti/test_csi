@@ -3,7 +3,7 @@
     margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
+    min-width: 1300px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -51,6 +51,11 @@ input[type="submit"]:hover
  border-radius: 1px;
 }
 
+input[type="text"] {
+    width: 420px;
+}
+
+
 .mainframe {
  position: absolute;
  top: 0;
@@ -62,6 +67,21 @@ input[type="submit"]:hover
  background: #fefefe;
  border-collapse: collapse; 
 }
+
+
+/* input fields customization */
+.mandatory:placeholder-shown {
+    background: #ffeeee;
+}
+
+.mandatory, .optional {
+    background: #eeffee;
+}
+
+.optional:placeholder-shown {
+    background: default;
+}
+
 
 .debug {
  /*border: 1px solid red;*/

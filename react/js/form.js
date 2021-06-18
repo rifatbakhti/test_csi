@@ -1,4 +1,317 @@
-// lalala
+// Veniamin Blinov@CSi Group
+'use strict';
+
+const OPTIONS_MKTU = [
+  {"id": "1", "label": "Химические продукты"},
+  {"id": "2", "label": "Краски, олифы, лаки"},
+  {"id": "3", "label": "Препараты для чистки, парфюмерия и косметика"},
+  {"id": "4", "label": "Технические масла, смазки, топлива"},
+  {"id": "5", "label": "Фармацевтические препараты"},
+  {"id": "6", "label": "Обычные металлы и сплавы"},
+  {"id": "7", "label": "Машины, станки и двигатели"},
+  {"id": "8", "label": "Ручные инструмены"},
+  {"id": "9", "label": "Приборы, инструменты, оборудование"},
+  {"id": "10", "label": "Медицинские приборы и инструменты"},
+  {"id": "11", "label": "Устройства для получения тепла"},
+  {"id": "12", "label": "Транспортные средства"},
+  {"id": "13", "label": "Огнестрельное оружие и пиротехнические средства"},
+  {"id": "14", "label": "Благородные металлы и их сплавы, изделия из них"},
+  {"id": "15", "label": "Музыкальные инструменты"},
+  {"id": "16", "label": "Бумага и изделия из бумаги"},
+  {"id": "17", "label": "Резина, асбест, пластмассы"},
+  {"id": "18", "label": "Кожа и имитация кожи"},
+  {"id": "19", "label": "Неметаллические строительные материалы"},
+  {"id": "20", "label": "Мебель и другие изделия"},
+  {"id": "21", "label": "Домашняя и кухонная утварь"},
+  {"id": "22", "label": "Верёвочно-канатные изделия"},
+  {"id": "23", "label": "Нити текстильные и пряжа"},
+  {"id": "24", "label": "Ткани, одеяла, покрывала и скатерти"},
+  {"id": "25", "label": "Одежда, обувь, головные уборы"},
+  {"id": "26", "label": "Галантерейные и басонные изделия"},
+  {"id": "27", "label": "Покрытия для полов"},
+  {"id": "28", "label": "Игрушки и спортивные товары"},
+  {"id": "29", "label": "Продукты животного происхождения"},
+  {"id": "30", "label": "Растительные пищевые продукты"},
+  {"id": "31", "label": "Продукты земледелия и лесного хозяйства"},
+  {"id": "32", "label": "Безалкогольные напитки и пиво"},
+  {"id": "33", "label": "Алкогольные напитки (за исключением пива)"},
+  {"id": "34", "label": "Табак и курительные принадлежности"},
+  {"id": "35", "label": "Помощь в управлении бизнесом"},
+  {"id": "36", "label": "Финансовые услуги"},
+  {"id": "37", "label": "Строительство и ремонт"},
+  {"id": "38", "label": "Телекоммуникации"},
+  {"id": "39", "label": "Перевозка людей и товаров"},
+  {"id": "40", "label": "Обработка материалов"},
+  {"id": "41", "label": "Услуги обучения и развлекательные мероприятия"},
+  {"id": "42", "label": "Научные и технические услуги"},
+  {"id": "43", "label": "Гостиницы, кейтеринг"},
+  {"id": "44", "label": "Медицинский и косметические услуги"},
+  {"id": "45", "label": "Юридические услуги и службы безопасности"}
+];
+
+// Form layout; mb export and store as json? 
+const G_TMFormLayout = {
+  "subforms": [
+    {
+      "sf_name": "contact_data",
+      "static": true,
+      "header": "Адрес для переписки с РосПатентом",
+      "fields_prefix": "cd",
+      "fields": [ // here we store {type: "input" by default, default: "" by default, mandatory: false by default}
+        {"id": "name_f", "label": "Фамилия"},
+        {"id": "name_i", "label": "Имя"},
+        {"id": "name_o", "label": "Отчество (при наличии)", "optional": true},
+        {"id": "inst", "label": "Организация"},
+        {"id": "addr", "label": "Адрес для корреспонденции"},
+        {"id": "phone", "label": "Телефон"},
+        {"id": "email", "label": "Адрес электронной почты"}
+      ]
+    },
+    {
+      "sf_name": "appl_man",
+      "static": false, // for dynamic forms field_name = {prefix}_{name}_{appl_id}
+      "header": "Заявители - физические лица",
+      "fields_prefix": "am",
+      "fields_var": [
+        {"id": "name_f", "label": "Фамилия"},
+        {"id": "name_i", "label": "Имя"},
+        {"id": "name_o", "label": "Отчество"},
+        {"id": "addr", "label": "Адрес"},
+        {"id": "country", "label": "Страна", "type": "select_country", "default": "RU"},
+        {"id": "inn", "label": "ИНН"},
+        {"id": "snils", "label": "СНИЛС"},
+        {"id": "pspt_type", "label": "Документ", "type": "select_passport", "defalut": "RU"},
+        {"id": "pspt_seria", "label": "Серия паспорта"},
+        {"id": "pspt_no", "label": "Номер паспорта"},
+        {"id": "occup", "label": "Должность"},
+      ]
+    },
+    {
+      "sf_name": "appl_inst",
+      "static": false,
+      "header": "Заявители - организации",
+      "fields_prefix": "ai",
+      "fields_var": [
+        {"id": "name", "label": "Наименование юридического лица"},
+        {"id": "addr", "label": "Адрес"},
+        {"id": "ogrn", "label": "ОГРН"},
+        {"id": "kpp", "label": "КПП"},
+        {"id": "inn", "label": "ИНН"}
+      ]
+    },
+    {
+      "sf_name": "appl_repr",
+      "static": false,
+      "header": "Представитель заявителя",
+      "fields_prefix": "ar",
+      "fields_var": [
+        {"id": "type", "label": "Наименование юридического лица", "type": "select_repr_type", "default": "POVER"},
+        {"id": "name_f", "label": "Фамилия"},
+        {"id": "name_i", "label": "Имя"},
+        {"id": "name_o", "label": "Отчество"},
+        {"id": "occup", "label": "Должность"},
+        {"id": "addr", "label": "Адрес"},
+        {"id": "phone", "label": "Телефон"},
+        {"id": "fax", "label": "Факс"},
+        {"id": "email", "label": "Адрес электронной почты"},
+        {"id": "cert_id", "label": "Регистрационный номер поверенного"},
+        {"id": "repr_to", "label": "Срок представительства: дата начала", "type": "date"},
+        {"id": "repr_from", "label": "Срок представительства: дата окончания", "type": "date"}
+      ]
+    },
+    {
+      "sf_name": "trademark_info",
+      "static": true,
+      "header": "Заявляемое обозначение",
+      "fields_prefix": "tm",
+      "fields": [
+        {"id": "file", "label": "Файл обозначения", "type": "file", "default": "POVER", "comment": "ограничить или процессить, чтобы был размер (gif, jpeg, png), mb restriction? size?"},
+        {"id": "desc", "label": "Описание", "type": "textarea"},
+        {"id": "color_space", "label": "Цвет", "type": "select_color"},
+        {"id": "color_list", "label": "Перечислите цвета (для цветных изображений)"},
+        {"id": "hint_verbal", "label": "Указание: словесный знак", "type": "flag"},
+        {"id": "hint_izo", "label": "Указание: изобразительный знак", "type": "flag"},
+        {"id": "hint_vol", "label": "Указание: объёмный знак", "type": "flag"},
+        {"id": "hint_mixed", "label": "Указание: комбинированный знак", "type": "flag"},
+        {"id": "hint_other", "label": "Указание: другое", "type": "flag", "comment": "другой тип знака или какое-то другое указание?"},
+        {"id": "type", "label": "Тип знака", "type": "select_tm_type"},
+        {"id": "detl", "label": "Пояснение", "type": "textarea", "placeholder": "характеристики знака, не являющегося словесным, изобразительным или их комбинацией"},
+        {"id": "shared", "label": "Коллективный знак", "type": "flag"},
+        {"id": "prtcd_el", "label": "Охраняемые элементы", "type": "textarea", "placeholder": "перечислить охраняемые элементы заявляемого товарного знака"}
+      ]
+    },
+    {
+      "sf_name": "mktu",
+      "static": true,
+      "header": "Классы МКТУ",
+      "fields_prefix": "tm",
+      "fields": [
+        {"id": "ids", "label": "Идентификаторы классов", "type": "select_mktu", "comment": "выберите один или несколько классов http://select2.org/getting-started/basic-usage или так сделать"}
+      ]
+    },
+  ]
+};
+
+/* global cache for storing values */
+var G_FormCache = {};
+
+function handle_change(event) {
+  if (event.target.type == "checkbox") {
+    G_FormCache[event.target.name] = event.target.checked;
+  }
+  if (event.target.type == "select-multiple") {
+    G_FormCache[event.target.name] = event.target.selectedOptions;
+  }
+  else {
+    G_FormCache[event.target.name] = event.target.value;  
+  }
+  console.log(event.target);
+  console.log(G_FormCache);
+}
+
+function select_repr_type(name_, value_, onclick_) {
+  return (
+    <select width="200px" name={name_} value={value_} onChange={onclick_}>
+      <option value="POVER">Патентный поверненный</option>
+      <option value="OTHER">Иной гражданин</option>
+    </select>
+  )
+}
+
+function element(type_, name_, label_, req_, comment_, placeholder_) {
+  if (type_ === undefined || type_ == "text" ) {  // text
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td> <input type="text" name={name_} placeholder={placeholder_ === undefined ? " " : placeholder_} className={req_ == true ? "mandatory" : "optional"} value={G_FormCache[name_]} onChange={handle_change} /></td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "textarea") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td><textarea rows="2" cols="55" name={name_} placeholder={placeholder_ === undefined ? " " : placeholder_} className={req_ == true ? "mandatory" : "optional"} value={G_FormCache[name_]} onChange={handle_change} /></td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "flag") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td><input type="checkbox" name={name_} value={G_FormCache[name_]} onChange={handle_change} /></td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "file") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td> <input type="file" name={name_} value={G_FormCache[name_]} onChange={handle_change} /></td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "select_country") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td>
+          <select width="200px" name={name_} value={G_FormCache[name_]} onChange={handle_change}>
+            <option key="ru" value="RU">Россия</option>
+            <option key="ua" value="UA">Украина</option>
+            <option key="tr" value="TR">Турция</option>
+            <option key="bl" value="BL">Беларусь</option>
+          </select>
+        </td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "select_color") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td>
+          <select width="200px" name={name_} value={G_FormCache[name_]} onChange={handle_change}>
+            <option value="GRAYSCALE">Чёрно-белое (оттенки серого)</option>
+            <option value="COLOR">Цвертное</option>
+          </select>
+        </td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "select_tm_type") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td>
+          <select width="200px" name={name_} value={G_FormCache[name_]} onChange={handle_change}>
+            <option value="LIGHT">световой знак</option>
+            <option value="MUTABLE">изменяющийся знак</option>
+            <option value="POSITIONAL">позиционный знак</option>
+            <option value="TOUCH">осязательный знак</option>
+            <option value="TASTE">вкусовой знак</option>
+            <option value="HOLOGRAPHIC">голографический знак</option>
+            <option value="SOUND">звуковой знак</option>
+            <option value="SMELL">обонятельный знак</option>
+            <option value="COLORS_ONLY">знак, состоящий исключительно из одного или нескольких цветов</option>
+          </select>
+        </td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    );
+  }
+  if (type_ == "select_mktu") {
+    return (
+      <tr>
+        <td>{label_}</td>
+        <td>
+          <select size="15" name={name_} value={G_FormCache[name_]} onChange={handle_change} multiple>
+            {
+              OPTIONS_MKTU.map((el) => <option value={el.id} title={el.label}>{el.id + " - " + el.label}</option>)
+            }
+          </select>
+        </td>
+        <td>{comment_ === undefined ? "комментарий" : comment_}</td>
+      </tr>
+    ); 
+  }
+}
+
+
+function generate_static_subform(sf_) {
+  return (
+    <table className="styled-table">
+      <thead>
+        <tr>
+          <td colSpan="3">
+            {sf_.header}
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th width="300px">Поле</th>
+          <th>Значение</th>
+          <th>Комментарий</th>
+        </tr>
+        {
+          sf_.fields.map((el) => element(el.type, sf_.fields_prefix + "_" + el.id, el.label, el.optional != true, el.comment, el.placeholder))
+        }
+      </tbody>
+    </table>
+  );
+}
+
+
+
+
+
 
 class IndivApplSubform extends React.Component {
   prefix = "a";
@@ -577,6 +890,21 @@ const subformContainers = new Map(
     [Representative, document.querySelector("#representative")],
     [ProiritySubform, document.querySelector("#priority_subform")]
   ]
+);
+
+ReactDOM.render(
+  generate_static_subform(G_TMFormLayout["subforms"][0]),
+  document.querySelector("#contact_data_subform")
+);
+
+ReactDOM.render(
+  generate_static_subform(G_TMFormLayout["subforms"][4]),
+  document.querySelector("#trademark_info_subform")
+);
+
+ReactDOM.render(
+  generate_static_subform(G_TMFormLayout["subforms"][5]),
+  document.querySelector("#mktu_subform")
 );
 
 for (let [key, value] of subformContainers) {
