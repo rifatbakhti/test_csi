@@ -58,7 +58,7 @@ const G_TMFormLayout = {
       "header": "Адрес для переписки с РосПатентом",
       "fields_prefix": "cd",
       "fields": [ // here we store {type: "input" by default, default: "" by default, mandatory: false by default}
-        {"id": "name_f", "label": "Фамилия"},
+        {"id": "name_f", "label": "Фамилия", "comment": "Нужно подумать"},
         {"id": "name_i", "label": "Имя"},
         {"id": "name_o", "label": "Отчество (при наличии)", "optional": true},
         {"id": "inst", "label": "Организация"},
